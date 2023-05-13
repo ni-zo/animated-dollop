@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'node:18.16.0-alpine'
+        docker { image 'docker:dind'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
          }
         
@@ -15,9 +15,8 @@ pipeline {
         stage('Launch App') {
             steps {
                 // Add the steps to launch your app here
-                sh 'su - root'
-                sh 'apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --repository http://dl-cdn.alpinelinux.org/alpine/edge/community docker'
-
+                
+                sh 'docker run --rm -v $(pwd):/app -w /app node:18.16.0-alpine npm i'
                 sh 'npm install'
                 sh 'node index.js'
             }
