@@ -16,7 +16,7 @@ pipeline {
             steps {
                 // Add the steps to launch your app here
                 sh 'apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --repository http://dl-cdn.alpinelinux.org/alpine/edge/community docker'
-'
+
                 sh 'npm install'
                 sh 'node index.js'
             }
