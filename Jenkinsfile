@@ -14,6 +14,7 @@ pipeline {
         stage('Launch App') {
             steps {
                 // Add the steps to launch your app here
+                sh 'npm i'
                 sh 'node index.js'
             }
         }
