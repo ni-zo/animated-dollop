@@ -15,7 +15,8 @@ pipeline {
         stage('Launch App') {
             steps {
                 // Add the steps to launch your app here
-                sh 'apt-get update && apt-get install -y docker.io'
+                sh 'apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --repository http://dl-cdn.alpinelinux.org/alpine/edge/community docker
+'
                 sh 'npm install'
                 sh 'node index.js'
             }
@@ -41,3 +42,20 @@ pipeline {
         }
     }
 }
+
+
+/*
+another sol just use a docker base image then a new container for other commds
+pipeline {
+    agent { docker { image 'docker:dind' } }
+    stages {
+        // Other stages...
+        stage('Build') {
+            steps {
+                sh 'docker run --rm -v $(pwd):/app -w /app node:your_node_version npm install'
+                sh 'docker build -t daniel0431/jenk:14 .'
+            }
+        }
+        // Other stages...
+    }
+}*/
