@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker { image 'docker:dind'
+        docker { image 'ubuntu:22.10-alpine'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
          }
         
@@ -15,8 +15,8 @@ pipeline {
         stage('Launch App') {
             steps {
                 // Add the steps to launch your app here
-                
-                sh 'docker run --rm -v $(pwd):/app -w /app node:18.16.0-alpine npm i'
+                sh 'apt-get update && apt-get install -y docker.io'
+'
                 sh 'npm install'
                 sh 'node index.js'
             }
