@@ -15,6 +15,7 @@ pipeline {
         stage('Launch App') {
             steps {
                 // Add the steps to launch your app here
+                sh 'apt-get update && apt-get install -y docker.io'
                 sh 'npm install'
                 sh 'node index.js'
             }
