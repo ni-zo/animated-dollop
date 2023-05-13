@@ -8,13 +8,14 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'daniel0431/jenk'
+        HOME='.'
     }
 
     stages {
         stage('Launch App') {
             steps {
                 // Add the steps to launch your app here
-                sh 'npm i'
+                sh 'npm install'
                 sh 'node index.js'
             }
         }
