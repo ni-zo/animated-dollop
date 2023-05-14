@@ -16,7 +16,6 @@ pipeline {
     }
             steps {
                 // Add the steps to launch your app here
-                //sh 'docker run --rm -v $(pwd):/app -w /app node:18.16.0-alpine npm install && node index.js'
                 sh 'npm install'
                 sh 'node index.js'
             }
