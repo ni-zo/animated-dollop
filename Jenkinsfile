@@ -1,5 +1,5 @@
 pipeline {
-    agent  None
+    agent  none
 
     environment {
         DOCKER_IMAGE = 'daniel0431/jenk'
