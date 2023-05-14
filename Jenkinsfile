@@ -1,5 +1,5 @@
 pipeline {
-    agent {
+    agent  {
         docker { image 'docker:dind'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
          }
@@ -13,11 +13,17 @@ pipeline {
 
     stages {
         stage('Launch App') {
+            agent  {
+        docker { image 'node:18.16.0-alpine'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
+         }
+        
+    }
             steps {
                 // Add the steps to launch your app here
-                sh 'docker run --rm -v $(pwd):/app -v /var/run/docker.sock:/var/run/docker.sock -w /app node:18.16.0-alpine npm install && node index.js'
-                /*sh 'npm install'
-                sh 'node index.js'*/
+                //sh 'docker run --rm -v $(pwd):/app -w /app node:18.16.0-alpine npm install && node index.js'
+                sh 'npm install'
+                sh 'node index.js'
             }
         }
 
