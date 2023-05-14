@@ -12,19 +12,19 @@ pipeline {
     }
 
     stages {
-        stage('Launch App') {
-            /*agent  {
+        /*stage('Launch App') {
+            /agent  {
                 docker { image 'node:18.16.0-alpine'
                 args '-v /var/run/docker.sock:/var/run/docker.sock'
                 }
                 
-            }*/
+            }/
             steps {
                 // Add the steps to launch your app here
                 sh 'npm install'
                 sh 'node index.js'
             }
-        }
+        }*/
 
         stage('Build And Push Docker Image') {
             /*agent  {
@@ -32,13 +32,15 @@ pipeline {
                 args '-v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }*/
-            
+
 
             steps {
-                script {
+               /* script {
                     app = docker.build("${DOCKER_IMAGE}:${env.BUILD_NUMBER}")
-                }
-            }
+                }*/
+                sh "docker build -t ${DOCKER_IMAGE}:${env.BUILD_NUMBER} ."
+                            }
+            
             post{
                 success {
                     script {
