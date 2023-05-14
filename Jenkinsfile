@@ -1,10 +1,5 @@
 pipeline {
-    agent  {
-        docker { image 'docker:dind'
-        args '-v /var/run/docker.sock:/var/run/docker.sock'
-         }
-        
-    }
+    agent  None
 
     environment {
         DOCKER_IMAGE = 'daniel0431/jenk'
@@ -27,16 +22,17 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build AND Push Docker Image') {
+            agent  {
+        docker { image 'node:18.16.0-alpine'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
+         }}
             steps {
                 script {
                     app = docker.build("${DOCKER_IMAGE}:${env.BUILD_NUMBER}")
                 }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
+            }post{
+            success {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker') {
                         app.push("${env.BUILD_NUMBER}")
@@ -45,6 +41,9 @@ pipeline {
                 }
             }
         }
+        }
+
+ 
     }
 }
 
