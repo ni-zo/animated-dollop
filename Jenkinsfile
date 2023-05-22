@@ -20,7 +20,7 @@ pipeline {
             post {
                 success {
                     script {
-                        docker.withRegistry('https://registry.hub.docker.com', 'docker') {
+                        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-access') {
                             def app = docker.build("${DOCKER_IMAGE}:${env.BUILD_NUMBER}")
                             app.push("${env.BUILD_NUMBER}")
                             app.push("latest")
